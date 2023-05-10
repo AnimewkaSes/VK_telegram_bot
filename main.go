@@ -1,28 +1,30 @@
 package main
 
 import (
-	"VKbot/telegram/Token"
 	"VKbot/telegram/handle"
 	"VKbot/telegram/structs"
+	"VKbot/telegram/util"
 	"database/sql"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	_ "github.com/lib/pq"
 	"log"
+	"os"
 )
 
 var users map[int]*structs.User
 
 func main() {
-
-	bot, err := tgbotapi.NewBotAPI(Token.OpenFile())
+	util.LoadConfig()
+	token, _ := os.LookupEnv("TELEGRAM_BOT_TOKEN")
+	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		log.Fatal(err)
 	}
 	bot.Debug = true
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	connStr := "user=postgres password=05260517at dbname=postgres sslmode=disable"
+	connStr := "host=db port=5432 user=postgres password=password dbname=postgres sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)

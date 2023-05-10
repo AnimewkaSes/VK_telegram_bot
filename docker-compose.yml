@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     command: ./app
-    ports:
+
       
     restart: on-failure
     depends_on:

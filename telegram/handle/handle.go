@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-var key = []byte("my32bytekey123456789012345678901")
 var users map[int]*structs.User
 
 func HandleCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update, db *sql.DB) {
